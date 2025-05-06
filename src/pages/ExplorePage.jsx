@@ -10,11 +10,18 @@ const ExplorePage = () => {
   const [page, setPage] = useState(0);
   const imageUrl = useSelector((state) => state.movies.imageUrl);
 
+  const language = useSelector((state) => state.movies.language);
+
   const fetchData = async () => {
     try {
+      //include_adult=false&include_video=false&language=vi&page=1&sort_by=popularity.desc
       const response = await axios.get(`/discover/${params.explore}`, {
         params: {
+          include_adult: false,
+          include_video: false,
+          language: language,
           page: page,
+          sort_by: "popularity.desc",
         },
       });
       setData((prev) => [...prev, ...response.data.results]);
@@ -35,7 +42,7 @@ const ExplorePage = () => {
     if (page == 1) {
       fetchData();
     }
-  }, [params.explore]);
+  }, [params.explore, language]);
 
   useEffect(() => {
     if (page != 0) {
@@ -57,26 +64,27 @@ const ExplorePage = () => {
   }, []);
 
   return (
-    data &&
-    data.length > 0 && (
-      <div className="container px-2 py-14 min-h-screen">
-        <h2 className="my-5 text-xl lg:text-2xl font-bold">
-          {params.explore === "tv" ? "TV Shows" : "Movies"}
-        </h2>
-        <div
-          className={`grid grid-cols-[repeat(auto-fit,340px)] lg:grid-cols-[repeat(auto-fit,280px)] justify-center lg:justify-start gap-6 overflow-x-scroll scroll-none relative z-10 scroll-smooth`}
-        >
-          {data.map((item, index) => (
-            <Card
-              key={index}
-              data={item}
-              imageUrl={imageUrl}
-              media_type={params.explore}
-            />
-          ))}
+    <div className="container px-2 py-14 min-h-screen">
+      {data && data.length > 0 && (
+        <div className="">
+          <h2 className="my-5 text-xl lg:text-2xl font-bold">
+            {params.explore === "tv" ? "TV Shows" : "Movies"}
+          </h2>
+          <div
+            className={`grid grid-cols-[repeat(auto-fit,340px)] lg:grid-cols-[repeat(auto-fit,280px)] justify-center lg:justify-start gap-6 overflow-x-scroll scroll-none relative z-10 scroll-smooth`}
+          >
+            {data.map((item, index) => (
+              <Card
+                key={index}
+                data={item}
+                imageUrl={imageUrl}
+                media_type={params.explore}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    )
+      )}
+    </div>
   );
 };
 

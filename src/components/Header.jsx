@@ -4,12 +4,22 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { FaSearch } from "react-icons/fa";
 import { navigation } from "../constants/navigation";
 import ImageUser from "../assets/user.png";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setLanguage } from "../store/Slices/movieSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const inputRef = useRef();
+  const popRef = useRef();
+  const closeTooltip = () => popRef.current.close();
+  const dispatch = useDispatch();
+
+  const language = useSelector((state) => state.movies.language);
+
   const handleToSearch = (e) => {
     e.preventDefault();
     const params = new URLSearchParams(location.search);
@@ -37,14 +47,14 @@ const Header = () => {
                     `${isActive ? "text-white" : "text-neutral-300"}`
                   }
                 >
-                  {nav.label}
+                  {language === "vi" ? nav.labelVi : nav.label}
                 </NavLink>
               );
             })}
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 relative">
           <form
             className={`hidden gap-3 items-center md:flex`}
             onSubmit={handleToSearch}
@@ -53,15 +63,63 @@ const Header = () => {
               ref={inputRef}
               className={`p-2 outline-none `}
               type="text"
-              placeholder="Search here..."
+              placeholder={
+                language === "vi" ? "Nhập từ khóa..." : "Search here..."
+              }
               defaultValue={new URLSearchParams(location.search).get("q")}
             />
             <button type="submit">
               <FaSearch className="text-white text-xl mr-3 cursor-pointer" />
             </button>
           </form>
-          <div className="h-7 w-7 rounded-full overflow-hidden">
-            <img src={ImageUser} alt="this is image" />
+          <div>
+            <Popup
+              ref={popRef}
+              contentStyle={{
+                background: "rgba(0,0,0,0.9)",
+                border: "none",
+              }}
+              arrowStyle={{
+                color: "black",
+              }}
+              position={"bottom right"}
+              trigger={
+                <div className="h-7 w-7 rounded-full overflow-hidden cursor-pointer">
+                  <img src={ImageUser} alt="this is image" />
+                </div>
+              }
+            >
+              <div className="text-white p-2">
+                <p className="text-lg">{`${
+                  language === "en-US" ? "Languague" : "Ngôn ngữ"
+                }`}</p>
+                <div className="px-2 mt-2">
+                  <p
+                    className="py-2 px-3 hover:bg-neutral-500 cursor-pointer text-sm text-neutral-300"
+                    onClick={() => {
+                      if (language !== "en-US") {
+                        dispatch(setLanguage("en-US"));
+                      }
+                      closeTooltip();
+                    }}
+                  >
+                    {language === "en-US" ? "English" : "Tiếng Anh"}
+                  </p>
+                  <div className="my-1 h-[1px] w-full bg-neutral-500 rounded-full" />
+                  <p
+                    className="py-2 px-3 hover:bg-neutral-500 cursor-pointer text-sm text-neutral-300"
+                    onClick={() => {
+                      if (language !== "vi") {
+                        dispatch(setLanguage("vi"));
+                      }
+                      closeTooltip();
+                    }}
+                  >
+                    {language === "en-US" ? "Vietnamese" : "Tiếng Việt"}
+                  </p>
+                </div>
+              </div>
+            </Popup>
           </div>
         </div>
       </div>

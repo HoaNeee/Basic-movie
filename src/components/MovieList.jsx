@@ -14,7 +14,8 @@ const MovieList = ({ title, trending, movies, media_type }) => {
     containerRef.current.scrollLeft -= 320;
   };
   return (
-    movies && (
+    movies &&
+    movies.length > 0 && (
       <div className="container px-3 mx-auto my-5 relative">
         <h2 className="text-xl lg:text-2xl font-bold my-5">
           {title ?? "there is place title!"}

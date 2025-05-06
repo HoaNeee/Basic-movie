@@ -4,15 +4,21 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NavMobile from "../components/NavMobile";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setImageUrl, setMoviesTrending } from "../store/Slices/movieSlice";
 
 const LayoutDefault = () => {
   const dispatch = useDispatch();
 
+  const language = useSelector((state) => state.movies.language);
+
   const fetchMovieTrending = async () => {
     try {
-      const response = await axios.get("/trending/all/week");
+      const response = await axios.get("/trending/all/week", {
+        params: {
+          language: language,
+        },
+      });
       dispatch(setMoviesTrending(response.data.results));
     } catch (error) {
       console.log("error", error);
@@ -31,7 +37,7 @@ const LayoutDefault = () => {
   useEffect(() => {
     fetchMovieTrending();
     fetchConfiguration();
-  }, []);
+  }, [language]);
 
   return (
     <main className="pb-14 md:pb-0">

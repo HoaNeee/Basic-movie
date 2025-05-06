@@ -108,9 +108,15 @@ const SearchPage = () => {
               }
               defaultValue={query.get("q")}
             />
-            <button className="p-2 bg-purple-600 rounded-lg" type="submit">
-              {language === "vi" ? "Tìm kiếm" : "Search"}
-            </button>
+            <div
+              className={`${
+                language === "vi" ? "text-sm" : ""
+              } bg-purple-600 rounded-lg w-24 p-2`}
+            >
+              <button className={"inline-block w-full"} type="submit">
+                {language === "vi" ? "Tìm kiếm" : "Search"}
+              </button>
+            </div>
           </form>
           <h2 className="my-5 text-xl lg:text-2xl font-bold">
             {language === "vi" ? "Kết quả tìm kiếm" : "Search Results"}

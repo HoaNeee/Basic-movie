@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { navigationMobile } from "../constants/navigation";
 import { NavLink } from "react-router";
 import { FaHome } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const iconsMap = {
   MovieIcon: <BiMoviePlay />,
@@ -14,6 +15,7 @@ const iconsMap = {
 };
 
 const NavMobile = () => {
+  const language = useSelector((state) => state.movies.language);
   return (
     <div className="flex justify-between items-center w-full px-5">
       {navigationMobile.map((nav, index) => (
@@ -27,7 +29,9 @@ const NavMobile = () => {
           }
         >
           <div className="text-xl">{iconsMap[nav.icons]}</div>
-          <p>{nav.label}</p>
+          <p className={`${language === "vi" && "text-sm"}`}>
+            {language === "vi" ? nav.labelVi : nav.label}
+          </p>
         </NavLink>
       ))}
     </div>

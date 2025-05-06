@@ -177,7 +177,7 @@ const DetailPage = () => {
                   </p>
                 </div>
                 <Devider />
-                <div className="flex gap-3">
+                <div className="flex gap-3 items-center">
                   <p>
                     {language === "vi" ? "Đánh giá" : "Rating"} :{" "}
                     {Number(dataDetails?.vote_average || 0).toFixed(1)}+
@@ -199,9 +199,9 @@ const DetailPage = () => {
                 <Devider />
                 <div>
                   <p className="text-xl text-white font-bold mb-1">
-                    {language === "vi" ? "Mô tả: " : "Overview:"}
+                    {language === "vi" ? "Tổng quan: " : "Overview:"}
                   </p>
-                  <p>{dataDetails.overview}</p>
+                  <p>{dataDetails.overview || "Not Available"}</p>
                 </div>
                 <Devider />
                 <div className="flex gap-3 justify-center lg:justify-start items-center">
@@ -235,7 +235,7 @@ const DetailPage = () => {
                   <p>
                     {" "}
                     <span className="text-white font-bold">
-                      {language === "vi" ? "Tác giả" : "Writers"}
+                      {language === "vi" ? "Kịch bản" : "Writers"}
                     </span>{" "}
                     : {writers?.join(", ") || "Not Available"}
                   </p>

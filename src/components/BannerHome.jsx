@@ -7,6 +7,7 @@ const BannerHome = () => {
 
   const moviesTrending = useSelector((state) => state.movies.moviesTrending);
   const imageUrl = useSelector((state) => state.movies.imageUrl);
+  const language = useSelector((state) => state.movies.language);
 
   const handleNext = () => {
     let index = currIndex;
@@ -70,13 +71,18 @@ const BannerHome = () => {
                     {movie.title || movie.name}
                   </p>
                   <p className="text-sm text-ellipsis line-clamp-3 mt-3">
-                    {movie.overview}
+                    {movie.overview || "Playing now!"}
                   </p>
                   <div className="my-4 flex gap-3">
                     <p className="">
-                      Rating: {Number(movie.vote_average).toFixed(1)}+
+                      {language === "vi" ? "Đánh giá" : "Rating"}:{" "}
+                      {Number(movie.vote_average).toFixed(1)}+
                     </p>
-                    |<p>View : {Number(movie.popularity).toFixed(0)}k</p>
+                    |
+                    <p>
+                      {language === "vi" ? "Lượt xem" : "View"} :{" "}
+                      {Number(movie.popularity).toFixed(0)}k
+                    </p>
                   </div>
 
                   <button className="py-2 px-4 rounded-md text-black font-black text-lg bg-white mb-3 cursor-pointer hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-300 transition-all hover:scale-105">

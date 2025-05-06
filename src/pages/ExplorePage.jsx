@@ -68,7 +68,13 @@ const ExplorePage = () => {
       {data && data.length > 0 && (
         <div className="">
           <h2 className="my-5 text-xl lg:text-2xl font-bold">
-            {params.explore === "tv" ? "TV Shows" : "Movies"}
+            {params.explore === "tv"
+              ? language === "vi"
+                ? "Show truyền hình"
+                : "TV Shows"
+              : language === "vi"
+              ? "Phim ảnh"
+              : "Movies"}
           </h2>
           <div
             className={`grid grid-cols-[repeat(auto-fit,340px)] lg:grid-cols-[repeat(auto-fit,280px)] justify-center lg:justify-start gap-6 overflow-x-scroll scroll-none relative z-10 scroll-smooth`}

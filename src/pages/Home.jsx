@@ -12,7 +12,7 @@ const Home = () => {
   const { data: popularData } = useFetch("/movie/popular");
 
   return (
-    <div className="">
+    <div className="min-h-[91vh]">
       <BannerHome />
       <MovieList
         title={"Trending Show"}

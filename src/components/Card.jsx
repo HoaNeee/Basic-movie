@@ -8,10 +8,10 @@ const Card = ({ data, imageUrl, trending, index, media_type }) => {
   return (
     <Link
       to={`/${mediaType ?? "collection"}/${data.id}`}
-      className="h-94 w-[340px] lg:h-88 lg:w-[280px] relative inline-block"
+      className="h-94 w-[340px] lg:h-88 lg:w-[280px] relative inline-block overflow-hidden"
     >
       <img
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover hover:scale-105 transition-all"
         src={data.poster_path ? imageUrl + data.poster_path : ImageNotFound}
         alt="this is image"
       />

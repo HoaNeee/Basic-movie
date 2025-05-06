@@ -12,8 +12,12 @@ const Header = () => {
   const inputRef = useRef();
   const handleToSearch = (e) => {
     e.preventDefault();
-    const query = inputRef.current.value;
-    navigate(`/search?q=${query}`);
+    const params = new URLSearchParams(location.search);
+    let prevQuery = params.get("q");
+    const currQuery = inputRef.current.value;
+    if (prevQuery != currQuery) {
+      navigate(`/search?q=${currQuery}&page=1`);
+    }
   };
 
   return (
@@ -42,15 +46,15 @@ const Header = () => {
 
         <div className="flex items-center gap-2">
           <form
-            className="hidden md:flex gap-3 items-center"
+            className={`hidden gap-3 items-center md:flex`}
             onSubmit={handleToSearch}
           >
             <input
               ref={inputRef}
-              className="p-2 outline-none"
+              className={`p-2 outline-none `}
               type="text"
               placeholder="Search here..."
-              defaultValue={location.search.slice(3)}
+              defaultValue={new URLSearchParams(location.search).get("q")}
             />
             <button type="submit">
               <FaSearch className="text-white text-xl mr-3 cursor-pointer" />

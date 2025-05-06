@@ -20,7 +20,7 @@ const navigationMobile = [
   ...navigation,
   {
     label: "Search",
-    href: "search?q=",
+    href: "search?q=&page=1",
     icons: "SearchIcon",
   },
 ];
